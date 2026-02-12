@@ -105,7 +105,13 @@ function identifyLocally(text: string) {
     // Try to find "Privacy Policy of [Company]" or "[Company] Privacy Policy"
     const titleMatch = text.match(/([A-Z][a-z0-9\s]+(?:Inc\.|LLC|Ltd\.|Corporation|Company)?)\s+(?:Privacy|Data)\s+Policy/i);
 
-    if (titleMatch) {
+    // Explicit "Company Name:" pattern (common in simple text dumps)
+    const companyLabelMatch = text.match(/Company Name:\s*([^\n\r]+)/i);
+
+    if (companyLabelMatch) {
+        company = companyLabelMatch[1].trim();
+        title = `${company} Privacy Policy`;
+    } else if (titleMatch) {
         company = titleMatch[1].trim();
         title = `${company} Privacy Policy`;
     } else {

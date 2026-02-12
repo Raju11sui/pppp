@@ -39,8 +39,14 @@ export default function AnalyzePage() {
                 body: JSON.stringify({ content: text }),
             });
             const data = await res.json();
-            if (data.company) setCompany(data.company);
-            if (data.title) setTitle(data.title);
+            if (data.company) {
+                setCompany(data.company);
+                // Map company name to the first field as requested
+                setTitle(data.company);
+            } else if (data.title) {
+                // Fallback to title if no structured company name found
+                setTitle(data.title.replace(/ Privacy Policy$/i, ""));
+            }
         } catch (e) {
             console.error("Identify failed", e);
         } finally {
@@ -175,7 +181,7 @@ export default function AnalyzePage() {
             <div className="min-h-screen bg-white">
                 {/* Top bar */}
                 <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-xl border-b border-gray-100/80">
-                    <div className="flex items-center justify-between px-5 py-4 max-w-[1100px] mx-auto">
+                    <div className="flex items-center justify-between px-6 py-4 max-w-[1100px] mx-auto sm:px-12">
                         <button
                             onClick={() => setSidebarOpen(true)}
                             className="p-2 -ml-2 rounded-xl hover:bg-[#F3F4F6] transition-colors"
@@ -205,14 +211,14 @@ export default function AnalyzePage() {
                             {/* Policy Title */}
                             <div>
                                 <label className="block text-xs font-semibold uppercase tracking-widest text-[#6B7280] mb-2 flex items-center gap-2">
-                                    Privacy Policy Of
+                                    Company Owner Name
                                     {identifying && <span className="text-[10px] text-blue-500 animate-pulse">✨ AI Detecting...</span>}
                                 </label>
                                 <input
                                     type="text"
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
-                                    placeholder="Instagram Privacy Policy"
+                                    placeholder="Velvet Crumbs Artisan Bakery Pvt. Ltd."
                                     className="w-full px-4 py-3 rounded-xl bg-[#F9FAFB] border border-gray-200 text-[15px] text-[#111] placeholder:text-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#111]/10 focus:border-transparent transition-all"
                                 />
                             </div>
