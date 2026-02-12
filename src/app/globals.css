@@ -1,0 +1,162 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #111111;
+  --color-secondary: #6B7280;
+  --color-accent: #F3F4F6;
+  --color-surface: #FFFFFF;
+  --color-risk-low: #22C55E;
+  --color-risk-medium: #EAB308;
+  --color-risk-high: #EF4444;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --radius-card: 16px;
+  --radius-btn: 14px;
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 6px 24px rgba(0, 0, 0, 0.06);
+  --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.05), 0 12px 40px rgba(0, 0, 0, 0.08);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Gradient Background Animation */
+@keyframes gradient-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-bg {
+  background: linear-gradient(-45deg, #ffffff, #f0f9ff, #e0f2fe, #ffffff);
+  background-size: 400% 400%;
+  animation: gradient-flow 15s ease infinite;
+}
+
+/* Base Styles */
+body {
+  font-family: var(--font-sans);
+  color: var(--color-primary);
+  background: linear-gradient(-45deg, #ffffff, #f0f9ff, #e0f2fe, #ffffff);
+  background-size: 400% 400%;
+  animation: gradient-flow 15s ease infinite;
+}
+
+/* Apple-inspired button */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: #111111;
+  color: #FFFFFF;
+  border-radius: var(--radius-btn);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  border: none;
+  cursor: pointer;
+  transition: transform 200ms ease, opacity 200ms ease, box-shadow 200ms ease;
+  user-select: none;
+  /* Improve touch targets for mobile */
+  min-height: 48px;
+}
+
+/* Responsive Button Adjustments */
+@media (max-width: 640px) {
+  .btn-primary {
+    width: 100%;
+    /* Full width on mobile */
+    padding: 16px 24px;
+    /* Larger tap area */
+    font-size: 16px;
+    /* Avoid iOS zoom on focus */
+  }
+
+  .card {
+    padding: 1.5rem !important;
+    /* Smaller padding on mobile cards */
+  }
+}
+
+.btn-primary:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Card */
+.card {
+  background: rgba(255, 255, 255, 0.85);
+  /* Slightly transparent */
+  backdrop-filter: blur(12px);
+  /* Glassmorphism */
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Spinner */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 40;
+  backdrop-filter: blur(4px);
+  transition: opacity 0.3s ease;
+}
