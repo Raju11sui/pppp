@@ -48,7 +48,7 @@ async function tryGeminiIdentify(apiKey: string, text: string) {
   
   Return ONLY valid JSON:
   {
-    "company": "Exact Company Name",
+    "company": "Exact Company Name (Exclude website, email, phone, or address)",
     "title": "Exact Policy Title"
   }`;
 
@@ -106,7 +106,8 @@ function identifyLocally(text: string) {
     const titleMatch = text.match(/([A-Z][a-z0-9\s]+(?:Inc\.|LLC|Ltd\.|Corporation|Company)?)\s+(?:Privacy|Data)\s+Policy/i);
 
     // Explicit "Company Name:" pattern (common in simple text dumps)
-    const companyLabelMatch = text.match(/Company Name:\s*([^\n\r]+)/i);
+    // Stops if it encounters common labels like Website, Email, etc. on the same line
+    const companyLabelMatch = text.match(/Company Name:\s*([^\n\r|]+?)(?=\s*(?:Website:|Email:|URL:|Phone:|$))/i);
 
     if (companyLabelMatch) {
         company = companyLabelMatch[1].trim();
